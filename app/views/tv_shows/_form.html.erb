@@ -1,0 +1,64 @@
+<%= form_with(model: tv_show) do |form| %>
+  <% if tv_show.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tv_show.errors.count, "error") %> prohibited this tv_show from being saved:</h2>
+
+      <ul>
+        <% tv_show.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :summary %>
+    <%= form.text_area :summary %>
+  </div>
+
+  <div class="field">
+    <%= form.label :release_date %>
+    <%= form.date_field :release_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rating %>
+    <%= form.text_field :rating %>
+  </div>
+
+  <div class="field">
+      <%= form.collection_select(:nationality_id, Nationality.all, :id, :name, prompt: true) %>
+  </div>
+
+  <div class="field">
+    <%#= form.collection_select(:genre_ids, Genre.all, :id, :name,{ prompt: true }, { multiple: true }) %>
+    <%#= form.collection_check_boxes :genre_ids, Genre.all, :id, :name %>
+    <%= form.collection_radio_buttons :genre_ids, Genre.all, :id, :name %>
+  </div>
+
+  <fieldset style="width:270px">
+    <legend>Film locations</legend>
+
+    <ul class="field">
+      <%= form.fields_for :film_locations do |film_locations_form| %>
+        <li>
+          <%= film_locations_form.label :name %>
+          <%= film_locations_form.text_field :name %>
+
+          <%= film_locations_form.label :indoor %>
+          <%= film_locations_form.check_box :indoor %>
+        </li>
+      <% end %>
+    </ul>
+  </fieldset>
+  <br>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

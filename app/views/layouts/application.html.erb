@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MyFavoriteTvSeriesM9</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% if user_signed_in? %>
+        <div>
+            <p>Bienvenido <%= current_user.email %>!!</p>
+            <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+        </div>
+    <% else %>
+        <div>
+            <%= link_to 'Sign up', new_user_registration_path %> |
+            <%= link_to 'Log in', new_user_session_path %>
+        </div>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @tv_show.name %>
+</p>
+
+<p>
+  <strong>Summary:</strong>
+  <%= @tv_show.summary %>
+</p>
+
+<p>
+  <strong>Release date:</strong>
+  <%= @tv_show.release_date %>
+</p>
+
+<p>
+  <strong>Rating:</strong>
+  <%= @tv_show.rating %>
+</p>
+
+<p>
+    <strong>Nationality:</strong>
+    <%= image_tag(url_for(@tv_show.nationality.flag_img)) %>
+</p>
+
+<p><strong>Film locations:</strong></p>
+
+<ul>
+    <% if @tv_show.film_locations %>
+        <% @tv_show.film_locations.each do |film_location|%>
+            <li><strong><%= film_location.name %>: </strong>
+            <%= film_location.indoor ? 'Indoor' : 'Outdoor' %></li>
+        <% end %>
+    <% else %>
+        <% 'No Film Locations Added!!!'%>
+    <% end %>
+</ul>
+
+<h2>Listado de episodios</h2>
+<% @tv_show.episodes.each do |episode| %>
+    <p>
+        <strong>Episode number:</strong>
+        <%= episode.episode_number %>
+    </p>
+
+    <p>
+        <strong>Title:</strong>
+        <%= episode.title %>
+    </p>
+
+    <p>
+        <strong>Summary:</strong>
+        <%= episode.summary %>
+    </p>
+
+    <hr>
+<% end %>
+
+<p><strong>Actors:</strong></p>
+<ul>
+    <% if @tv_show.actors %>
+        <% @tv_show.actors.each do |actor|%>
+            <li><strong><%= actor.id %>: </strong><%= "#{actor.first_name} #{actor.last_name}" %></li>
+            <% if actor.image.attached? %>
+                <li><%= cl_image_tag(actor.image.key, size: '100x100') %></li>
+            <% end %>
+        <% end %>
+    <% else %>
+        <% 'No Actors Added!!!'%>
+    <% end %>
+</ul>
+
+<p><strong>Genres:</strong></p>
+<ul>
+    <% if @tv_show.genres %>
+        <% @tv_show.genres.each do |genre|%>
+            <li><strong><%= "#{genre.id}" %>: </strong><%= genre.name %></li>
+        <% end %>
+    <% else %>
+        <% 'No Genres Added!!!'%>
+    <% end %>
+</ul>
+
+<h2>Agregue un episodio:</h2>
+<%= form_with model: [ @tv_show, @tv_show.episodes.build ] do |form| %>
+    <p>
+        <%= form.label :episode_number %><br>
+        <%= form.number_field :episode_number %>
+    </p>
+    <p>
+        <%= form.label :title %><br>
+        <%= form.text_field :title %>
+    </p>
+    <p>
+        <%= form.label :summary %><br>
+        <%= form.text_area :summary %>
+    </p>
+    <p>
+        <%= form.submit "Crear episodio"%>
+    </p>
+<% end %>
+
+<%= link_to 'Add actors', new_tv_show_actor_path(@tv_show) %> |
+<%= link_to 'Edit', edit_tv_show_path(@tv_show) %> |
+<%= link_to 'Back', tv_shows_path %>

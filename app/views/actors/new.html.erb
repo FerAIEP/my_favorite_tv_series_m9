@@ -1,0 +1,28 @@
+<h1>Add actors to tv_show</h1>
+
+<%= form_with(model:[@tv_show, @actor]) do |form| %>
+    <div class="field">
+        <%= form.label :first_name %>
+        <%= form.text_field :first_name %>
+    </div>
+
+    <div class="field">
+        <%= form.label :last_name %>
+        <%= form.text_field :last_name %>
+    </div>
+
+    <div class="field">
+        <%= form.label :age %>
+        <%= form.number_field :age %>
+    </div>
+
+    <div class="field">
+        <%= form.label :image %>
+        <%= form.file_field :image%>
+    </div>
+
+    <br>
+    <div class="field">
+        <%= form.submit %>
+    </div>
+<% end %>
